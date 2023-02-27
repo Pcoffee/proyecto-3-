@@ -60,7 +60,7 @@ def test_num(n):
         elif i == '+':
             add += 1; u = t.find('+')
         elif i == '-':
-            rest += 1; u = t.find('-')
+            rest += 1; v = t.rfind('-')
         elif i.isalpha():
             if i == 'j':
                 im += 1
@@ -78,9 +78,10 @@ def test_num(n):
 
         elif (len(t) >= 2) and (im == 1) and ((t[-1] == 'j' and (t[0] != '+' 
             or t[-2] != '+' or t[-2] != '-') and (t[0] != '.' or t[-2] != '.' 
-            or t[u-1] != '.' or t[u+1] != '.')) or (t[u-1] == 'j' and (t[0] != '+'
-            or t[-1] != '+' or t[-1] != '-') and (t[0] != '.' or t[-1] != '.' 
-            or t[u-2] != '.' or t[u+1] != '.'))) and not (add == 1 and rest == 2):                     #Complex Numbers
+            or t[u-1] != '.' or t[u+1] != '.' or t[v-1] != '.' or t[v+1] != '.')) 
+            or ((t[u-1] == 'j' or t[v-1] == 'j') and (t[0] != '+' or t[-1] != '+'
+            or t[-1] != '-') and (t[0] != '.' or t[-1] != '.' or t[u-2] != '.'
+            or t[u+1] != '.' or t[v-2] != '.' or t[v+1] != '.'))) and not (add == 1 and rest == 2):    #Complex Numbers
             x = "class 'complex'"
 
         else:
@@ -126,7 +127,12 @@ def test(var):
 def number(var):
     t_num = test_num(var)
     if t_num == "class 'int'":
-        var = int(var)
+
+        if var == '-0' or var == '+0':
+            var = 0
+            
+        else:
+            var = int(var)
 
     elif t_num == "class 'float'":
         var = float(var)
@@ -216,3 +222,41 @@ def len_matrix(M):
         x = TypeError
 
     return x
+
+def identy_matrix(m):
+
+    if test_num(m) == "class 'int'":
+        m = int(m)
+
+        if m > 1:
+            I = []
+
+            for i in range(m):
+                row = []
+
+                for j in range(m):
+
+                    if i == j:
+                        row.append(1)
+
+                    else:
+                        row.append(0)
+
+                I.append(row)
+            x = I
+        
+        else:
+            x = ValueError
+    
+    else:
+        x = TypeError
+    
+    return x
+
+def test_eq(equation):
+    
+    pass    #Crear función que valide si es una ecuación.
+
+def eq_to_matrix(equations):
+
+    pass    #Crear matrices "A" y "b" a partir de una lista de strings
